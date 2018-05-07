@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
   },
   count: {
     fontSize: 40,
-    backgroundColor: 'red',
   }
 })
 
@@ -40,7 +39,7 @@ class Timer extends Component {
   }
 
   componentDidUpdate = () => {
-    if (!this.state.count-1) {
+    if (!(this.state.count-1)) {
       this.props.timerOverCallback()
     }
   }
