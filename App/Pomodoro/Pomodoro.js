@@ -10,7 +10,6 @@ const styles = StyleSheet.create({
   },
   count: {
     fontSize: 40,
-    backgroundColor: 'red',
   }
 })
 
@@ -33,21 +32,24 @@ class Timer extends Component {
     this.setState(
         prevState => ({count: prevState.count - 1})
     )
+    //console.log(`Decrease to ${this.state.count-1}`);
+    if (this.state.count < 0) this.state.timerOverCallback()
   }
 
   componentDidMount = () => {
+    //console.log(`Start timer ${this.state.count}`);
     this.interval = setInterval(this.decrease, 1000)
   }
 
-  componentDidUpdate = () => {
-    if (!this.state.count-1) {
-      this.props.timerOverCallback()
-    }
+  shouldComponentUpdate = (nextProps, nextState) => {
+    //console.log(`Should update ${nextState.count}`);
+    return nextState.count > -1
   }
 
   componentWillUnmount = () => { clearInterval(this.interval) }
 
   render() {
+    //console.log(`Rendered ${this.state.count}`);
     return (
       <Text style={styles.count}>{this.state.count}</Text>
     )
@@ -74,7 +76,7 @@ export default class App extends Component {
         style={styles.fillAndCenter}>
         {this.state.timerOn ?
           <Timer
-            count={1000}
+            count={3}
             timerOverCallback={this.toggleTimer}
           /> : <View/>
         }
