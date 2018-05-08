@@ -39,7 +39,7 @@ class Timer extends Component {
   }
 
   componentDidUpdate = () => {
-    if (!(this.state.count-1)) {
+    if (this.state.count-1 === -2) {
       this.props.timerOverCallback()
     }
   }
@@ -73,7 +73,7 @@ export default class App extends Component {
         style={styles.fillAndCenter}>
         {this.state.timerOn ?
           <Timer
-            count={1000}
+            count={5}
             timerOverCallback={this.toggleTimer}
           /> : <View/>
         }
