@@ -1,0 +1,35 @@
+import React from 'react'
+import { View, StyleSheet} from 'react-native'
+import InfoSquare from './InfoSquare.js'
+
+const InfoBar = ({}) => (
+  <View style={styles.container}>
+    <InfoSquare
+      text='work stretch'
+      value={45}
+    />
+    <InfoSquare
+      text='short break'
+      value={45}
+    />
+    <InfoSquare
+      text='long break'
+      value={45}
+    />
+    <InfoSquare
+      text='pomodoros'
+      value={45}
+    />
+  </View>
+)
+
+export default InfoBar
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: 'blue',
+    alignItems: 'center',
+  },
+})
