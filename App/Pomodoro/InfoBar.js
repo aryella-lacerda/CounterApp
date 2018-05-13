@@ -27,9 +27,12 @@ export default InfoBar
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    //flex: 1,
     flexDirection: 'row',
-    backgroundColor: 'blue',
-    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: 'yellow',
+    paddingLeft: 15,
+    paddingRight: 15,
+    //alignItems: 'flex-start',
   },
 })

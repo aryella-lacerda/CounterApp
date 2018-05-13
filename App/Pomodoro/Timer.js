@@ -2,12 +2,6 @@ import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import PropTypes from 'prop-types'
 
-const styles = StyleSheet.create({
-  count: {
-    fontSize: 40,
-  }
-})
-
 export default class Timer extends Component {
 
   static defaultProps = { count: 0 }
@@ -82,9 +76,22 @@ export default class Timer extends Component {
 
     //console.log(`Rendered ${this.state.count}`);
     return (
-      <TouchableOpacity onPress={this.pause}>
+      <TouchableOpacity
+        style={styles.container}
+        onPress={this.pause}>
         <Text style={styles.count}>{mins}:{secs}</Text>
       </TouchableOpacity>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    //flex: 1,
+    alignItems: 'center',
+    //backgroundColor: 'orange',
+  },
+  count: {
+    fontSize: 40,
+  }
+})

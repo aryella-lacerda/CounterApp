@@ -16,6 +16,10 @@ export default class InfoSquare extends Component {
     }
   }
 
+  breakString = () => {
+    
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -30,5 +34,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'center',
+    //backgroundColor: 'green',
   },
 });
