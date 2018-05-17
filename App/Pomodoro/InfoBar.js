@@ -17,7 +17,7 @@ const InfoBar = ({}) => (
       value={45}
     />
     <InfoSquare
-      text='pomodoros'
+      text='pomo cycles'
       value={45}
     />
   </View>
@@ -27,10 +27,10 @@ export default InfoBar
 
 const styles = StyleSheet.create({
   container: {
-    //flex: 1,
+    flex: 3,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: 'yellow',
+    //backgroundColor: 'yellow',
     paddingLeft: 15,
     paddingRight: 15,
     //alignItems: 'flex-start',

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types'
+import TimeIntervalButton from './TimeIntervalButton.js'
 
 export default class InfoSquare extends Component {
 
@@ -16,15 +17,21 @@ export default class InfoSquare extends Component {
     }
   }
 
-  breakString = () => {
-    
+  breakString = (str) => {
+    arr = []
+    str = str.split(' ')
+    for (i = 0; i < str.length; i++) {
+      arr.push(<Text key={i}>{str[i]}</Text>)
+    }
+    return arr
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text>{this.state.value}</Text>
-        <Text>{this.props.text}</Text>
+        <TimeIntervalButton 
+          value={this.state.value} />
+        {this.breakString(this.props.text)}
       </View>
     );
   }

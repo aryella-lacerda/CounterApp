@@ -13,11 +13,8 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Timer
-          style={styles.timer}
-        />
+        <Timer style={styles.timer} />
         <InfoBar />
-        <CustomizeArea />
       </View>
     )
   }
