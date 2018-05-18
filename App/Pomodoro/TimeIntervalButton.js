@@ -17,7 +17,7 @@ export default class TimeIntervalButton extends Component {
     }
   }
 
-  onPickerDissmissed = () => {
+  onPickerDismissed = () => {
     this.setState({
       pickerOpen: false,
     })
@@ -29,6 +29,7 @@ export default class TimeIntervalButton extends Component {
       //value: newValue,
       pickerOpen: true,
     })
+    console.log('Pressed!')
   }
 
   render() {
@@ -39,13 +40,10 @@ export default class TimeIntervalButton extends Component {
           onPress={this.onPress} >
           <Text>{this.state.value}</Text>
         </TouchableOpacity>
-        <Modal
-          animationType='slide'
-          transparent={false}
-          visible={this.state.pickerOpen}
-          onRequestClose={this.onPickerDissmissed}>
-          <Text>This is a modal.</Text>
-        </Modal>
+        <TimeIntervalPicker
+          onPickerDismissed={this.onPickerDismissed}
+          pickerVisible={this.state.pickerOpen}
+        />
       </View>
     )
   }
