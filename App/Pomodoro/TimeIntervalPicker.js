@@ -22,7 +22,10 @@ export default class TimeIntervalPicker extends Component {
     return arr
   }
 
-  renderItem = ({item}) => <Text style={styles.listItem}>{item.key}</Text>
+  renderItem = ({item}) =>
+  <View style={styles.listItemContainer}>
+    <Text style={styles.text}>{item.key}</Text>
+  </View>
 
   render() {
     return (
@@ -33,7 +36,7 @@ export default class TimeIntervalPicker extends Component {
         onRequestClose={this.props.onPickerDismissed}
       >
         <View style={styles.container}>
-          <Text style={styles.text}>minutes</Text>
+          <Text style={[styles.text, styles.minutes]}>minutes</Text>
           <FlatList
             style={styles.list}
             data={this.mins}
@@ -46,20 +49,31 @@ export default class TimeIntervalPicker extends Component {
 }
 
 const styles = StyleSheet.create({
+  minutes: {
+    marginHorizontal: 100,
+    marginBottom: 15,
+    borderBottomWidth: 1,
+    //backgroundColor: 'green',
+  },
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
+    paddingTop: 70,
+    paddingBottom: 70,
+    //backgroundColor: 'yellow',
     alignItems: 'stretch',
-    justifyContent: 'center',
+    //justifyContent: 'center',
   },
   text: {
-    backgroundColor: 'green',
+    fontSize: 20,
+    textAlign: 'center',
+    paddingTop: 10,
+    paddingBottom: 10,
+    //backgroundColor: 'green',
   },
-  listItem: {
-    backgroundColor: 'purple',
-    justifyContent: 'center',
+  listItemContainer: {
+    alignItems: 'center',
   },
   list: {
-    backgroundColor: 'red'
+    //backgroundColor: 'red'
   }
 })
