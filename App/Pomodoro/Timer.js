@@ -2,25 +2,17 @@ import React, {Component} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import PropTypes from 'prop-types'
 
-export default class Timer extends Component {
+//TODO: Add onTimeout prop, required.
 
-  static defaultProps = { minCount: 0 }
+export default class Timer extends Component {
 
   static propTypes = { minCount: PropTypes.number.isRequired }
 
-  this.state = {
-    count: this.convertToSeconds(this.props.minCount),
-    paused: true,
-  }
-
-
-
-  componentDidMount = () => {
-    //console.log(`Start timer ${this.state.count}`);
-
-    //Only start the countdown if it was passed a count prop.
-    if (this.state.count > 0) {
-      this.interval = setInterval(this.decrease, 1000)
+  constructor(props) {
+    super(props)
+    this.state = {
+      count: this.convertToSeconds(this.props.minCount),
+      paused: true,
     }
   }
 
@@ -47,26 +39,20 @@ export default class Timer extends Component {
   }
 
   convertToMinutes = (t) => {
-      if (t < 0) {
-        throw new RangeError('Tentativa de converter tempo negativo.')
-      }
-      m = Math.floor(t / 60)
-      s = t - (m * 60)
-      return {mins: m, secs: s}
+    if (t < 0) {throw new RangeError('Tentativa de converter tempo negativo.')}
+    m = Math.floor(t / 60)
+    s = t - (m * 60)
+    return {mins: m, secs: s}
   }
 
   decrease = () => {
-    this.setState(
-        prevState => ({count: prevState.count - 1})
-    )
+    this.setState( prevState => ({count: prevState.count - 1}) )
     //console.log(`Decrease to ${this.state.count-1}`);
   }
 
   pause = () => {
     //console.log('Pause')
-    this.setState(
-      prevState => ({paused: !this.state.paused})
-    )
+    this.setState( prevState => ({paused: !this.state.paused}) )
   }
 
   zeroPadLeft = ({mins, secs}) => {

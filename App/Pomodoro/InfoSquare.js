@@ -8,13 +8,8 @@ export default class InfoSquare extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
-  }
-
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: this.props.value,
-    }
+    intervalType: PropTypes.string.isRequired,
+    onTimeIntervalChange: PropTypes.func.isRequired,
   }
 
   breakString = (str) => {
@@ -30,7 +25,10 @@ export default class InfoSquare extends Component {
     return (
       <View style={styles.container}>
         <TimeIntervalButton
-          value={this.state.value} />
+          value={this.props.value}
+          intervalType={this.props.intervalType}
+          onTimeIntervalChange={this.props.onTimeIntervalChange}
+        />
         {this.breakString(this.props.text)}
       </View>
     );

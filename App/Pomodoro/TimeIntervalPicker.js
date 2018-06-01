@@ -25,7 +25,7 @@ export default class TimeIntervalPicker extends Component {
   }
 
   onPress = (value) => {
-    console.log(value)
+    console.log('TIME_INTERVAL_PICKER')
     this.props.onValueChange(value)
     this.props.dismissPicker()
   }

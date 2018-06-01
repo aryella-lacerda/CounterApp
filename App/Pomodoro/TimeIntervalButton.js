@@ -8,6 +8,8 @@ export default class TimeIntervalButton extends Component {
 
   static propTypes = {
     value: PropTypes.number.isRequired,
+    intervalType: PropTypes.string.isRequired,
+    onTimeIntervalChange: PropTypes.func.isRequired,
   }
 
   state = {
@@ -15,25 +17,27 @@ export default class TimeIntervalButton extends Component {
     pickerOpen: false
   }
 
-  //TODO: Fix function naming here
+  closePicker = () => { this.setState({ pickerOpen: false }) }
 
-  dismissPicker = () => { this.setState({ pickerOpen: false }) }
+  openPicker = () => { this.setState({ pickerOpen: true }) }
 
-  onPress = () => { this.setState({ pickerOpen: true }) }
-
-  onTimeIntervalChange = (value) => { this.setState({ value }) }
+  onTimeIntervalChange = (value) => {
+    console.log('TIME_INTERVAL_BUTTON')
+    this.setState({ value })
+    this.props.onTimeIntervalChange(this.props.intervalType, value)
+  }
 
   render() {
     return (
       <View>
         <TouchableOpacity
           style={styles.container}
-          onPress={this.onPress} >
+          onPress={this.openPicker}>
           <Text style={styles.text}>{this.state.value}</Text>
         </TouchableOpacity>
         <TimeIntervalPicker
           onValueChange={this.onTimeIntervalChange}
-          dismissPicker={this.dismissPicker}
+          dismissPicker={this.closePicker}
           pickerVisible={this.state.pickerOpen}
         />
       </View>
