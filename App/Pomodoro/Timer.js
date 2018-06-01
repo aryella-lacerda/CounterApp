@@ -4,17 +4,16 @@ import PropTypes from 'prop-types'
 
 export default class Timer extends Component {
 
-  static defaultProps = { count: 0 }
+  static defaultProps = { minCount: 0 }
 
-  static propTypes = { count: PropTypes.number.isRequired }
+  static propTypes = { minCount: PropTypes.number.isRequired }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      count: this.props.count,
-      paused: false,
-    }
+  this.state = {
+    count: this.convertToSeconds(this.props.minCount),
+    paused: true,
   }
+
+
 
   componentDidMount = () => {
     //console.log(`Start timer ${this.state.count}`);
@@ -40,6 +39,11 @@ export default class Timer extends Component {
 
     //console.log(`Should update ${nextState.count}`);
     return nextState.count > -1
+  }
+
+  convertToSeconds = (m) => {
+    if (m < 0) {throw new RangeError('Tentativa de converter tempo negativo.')}
+    return m * 60
   }
 
   convertToMinutes = (t) => {

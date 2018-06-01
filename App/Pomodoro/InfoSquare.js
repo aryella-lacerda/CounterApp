@@ -29,7 +29,7 @@ export default class InfoSquare extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TimeIntervalButton 
+        <TimeIntervalButton
           value={this.state.value} />
         {this.breakString(this.props.text)}
       </View>
@@ -41,6 +41,6 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
     alignItems: 'center',
-    //backgroundColor: 'green',
+    //backgroundColor: 'blue'
   },
 });

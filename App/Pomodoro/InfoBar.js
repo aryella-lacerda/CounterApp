@@ -6,19 +6,19 @@ const InfoBar = ({}) => (
   <View style={styles.container}>
     <InfoSquare
       text='work stretch'
-      value={45}
+      value={25}
     />
     <InfoSquare
       text='short break'
-      value={45}
+      value={5}
     />
     <InfoSquare
       text='long break'
-      value={45}
+      value={15}
     />
     <InfoSquare
       text='pomo cycles'
-      value={45}
+      value={4}
     />
   </View>
 )

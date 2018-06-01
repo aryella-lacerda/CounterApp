@@ -1,12 +1,14 @@
 import React, { Component } from 'react'
 import { View, FlatList, Text, StyleSheet, Modal } from 'react-native'
 import PropTypes from 'prop-types'
+import MinItem from './MinItem'
 
 export default class TimeIntervalPicker extends Component {
 
   static propTypes = {
-    onPickerDismissed: PropTypes.func.isRequired,
+    dismissPicker: PropTypes.func.isRequired,
     pickerVisible: PropTypes.bool.isRequired,
+    onValueChange: PropTypes.func.isRequired,
   }
 
   constructor(props) {
@@ -17,15 +19,22 @@ export default class TimeIntervalPicker extends Component {
   createObjArray = (n) => {
     arr = []
     for (const i = 1; i <= n; i++) {
-      arr.push({key: String(i)})
+      arr.push({value: String(i)})
     }
     return arr
   }
 
+  onPress = (value) => {
+    console.log(value)
+    this.props.onValueChange(value)
+    this.props.dismissPicker()
+  }
+
   renderItem = ({item}) =>
-  <View style={styles.listItemContainer}>
-    <Text style={styles.text}>{item.key}</Text>
-  </View>
+  <MinItem
+    value={item.value}
+    onPress={this.onPress}
+  />
 
   render() {
     return (
@@ -33,14 +42,16 @@ export default class TimeIntervalPicker extends Component {
         animationType='slide'
         transparent={false}
         visible={this.props.pickerVisible}
-        onRequestClose={this.props.onPickerDismissed}
+        onRequestClose={this.props.dismissPicker}
       >
         <View style={styles.container}>
           <Text style={[styles.text, styles.minutes]}>minutes</Text>
           <FlatList
             style={styles.list}
             data={this.mins}
+            keyExtractor={item => item.value}
             renderItem={this.renderItem}
+            showsVerticalScrollIndicator={false}
           />
         </View>
       </Modal>
@@ -64,14 +75,11 @@ const styles = StyleSheet.create({
     //justifyContent: 'center',
   },
   text: {
-    fontSize: 20,
+    fontSize: 30,
     textAlign: 'center',
     paddingTop: 10,
     paddingBottom: 10,
     //backgroundColor: 'green',
-  },
-  listItemContainer: {
-    alignItems: 'center',
   },
   list: {
     //backgroundColor: 'red'

@@ -5,32 +5,23 @@ import { Modal, View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import TimeIntervalPicker from './TimeIntervalPicker.js'
 
 export default class TimeIntervalButton extends Component {
+
   static propTypes = {
     value: PropTypes.number.isRequired,
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      value: this.props.value,
-      pickerOpen: false
-    }
+  state = {
+    value: this.props.value,
+    pickerOpen: false
   }
 
-  onPickerDismissed = () => {
-    this.setState({
-      pickerOpen: false,
-    })
-  }
+  //TODO: Fix function naming here
 
-  //TODO: Add newValue
-  onPress = () => {
-    this.setState({
-      //value: newValue,
-      pickerOpen: true,
-    })
-    console.log('Pressed!')
-  }
+  dismissPicker = () => { this.setState({ pickerOpen: false }) }
+
+  onPress = () => { this.setState({ pickerOpen: true }) }
+
+  onTimeIntervalChange = (value) => { this.setState({ value }) }
 
   render() {
     return (
@@ -38,10 +29,11 @@ export default class TimeIntervalButton extends Component {
         <TouchableOpacity
           style={styles.container}
           onPress={this.onPress} >
-          <Text>{this.state.value}</Text>
+          <Text style={styles.text}>{this.state.value}</Text>
         </TouchableOpacity>
         <TimeIntervalPicker
-          onPickerDismissed={this.onPickerDismissed}
+          onValueChange={this.onTimeIntervalChange}
+          dismissPicker={this.dismissPicker}
           pickerVisible={this.state.pickerOpen}
         />
       </View>
@@ -51,8 +43,15 @@ export default class TimeIntervalButton extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 60,
+    width: 60,
     borderRadius: 50,
-    padding: 15,
-    backgroundColor: 'silver'
+    padding: 5,
+    backgroundColor: 'silver',
   },
+  text: {
+    fontSize: 20,
+  }
 })
