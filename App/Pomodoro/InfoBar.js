@@ -2,48 +2,61 @@ import React from 'react'
 import { View, StyleSheet} from 'react-native'
 import InfoSquare from './InfoSquare'
 import PropTypes from 'prop-types'
-import * as Interval from './states'
+import * as Interval from './intervals'
 
-const InfoBar = (props) => (
+const InfoBar = ({
+  onTimeIntervalChange,
+  workingStretchValue,
+  shortBreakValue,
+  longBreakValue,
+  cyclesToLongBreakValue,
+}) => (
 
   <View style={styles.container}>
     <InfoSquare
       text='work stretch'
-      value={25}
+      value={workingStretchValue}
       intervalType={Interval.WORKING_STRECH}
-      onTimeIntervalChange={props.onTimeIntervalChange}
+      onTimeIntervalChange={onTimeIntervalChange}
     />
     <InfoSquare
       text='short break'
-      value={5}
+      value={shortBreakValue}
       intervalType={Interval.SHORT_BREAK}
-      onTimeIntervalChange={props.onTimeIntervalChange}
+      onTimeIntervalChange={onTimeIntervalChange}
     />
     <InfoSquare
       text='long break'
-      value={15}
+      value={longBreakValue}
       intervalType={Interval.LONG_BREAK}
-      onTimeIntervalChange={props.onTimeIntervalChange}
+      onTimeIntervalChange={onTimeIntervalChange}
     />
     <InfoSquare
       text='pomo cycles'
-      value={4}
+      value={cyclesToLongBreakValue}
       intervalType={Interval.CYCLES_TO_LONG_BREAK}
-      onTimeIntervalChange={props.onTimeIntervalChange}
+      onTimeIntervalChange={onTimeIntervalChange}
     />
   </View>
 )
 
-InfoBar.propTypes = { onTimeIntervalChange: PropTypes.func.isRequired }
+InfoBar.propTypes = {
+  onTimeIntervalChange: PropTypes.func.isRequired,
+  workingStretchValue: PropTypes.number.isRequired,
+  shortBreakValue: PropTypes.number.isRequired,
+  longBreakValue: PropTypes.number.isRequired,
+  cyclesToLongBreakValue: PropTypes.number.isRequired,
+}
 
 export default InfoBar
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
-    //backgroundColor: 'yellow',
+    backgroundColor: 'red',
     paddingLeft: 15,
     paddingRight: 15,
     //alignItems: 'flex-start',

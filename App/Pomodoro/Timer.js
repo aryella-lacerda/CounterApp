@@ -17,19 +17,22 @@ export default class Timer extends Component {
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {
-    //Unpausing
-    if (this.state.paused && !nextState.paused) {
-      //console.log('Set interval')
-      this.interval = setInterval(this.decrease, 1000)
+
+    //In the case where the time interval was changed mid-countdown.
+    if (this.props.minCount != nextProps.minCount) {
+      this.state.count = this.convertToSeconds(nextProps.minCount)
+      return true
     }
 
+    //Unpausing
+    if (this.state.paused && !nextState.paused) {
+      this.interval = setInterval(this.decrease, 1000)
+    }
     //Pausing
     if ((!this.state.paused && nextState.paused) || nextState.count < 0) {
-      //console.log('Clear interval')
       clearInterval(this.interval)
     }
 
-    //console.log(`Should update ${nextState.count}`);
     return nextState.count > -1
   }
 
@@ -47,11 +50,9 @@ export default class Timer extends Component {
 
   decrease = () => {
     this.setState( prevState => ({count: prevState.count - 1}) )
-    //console.log(`Decrease to ${this.state.count-1}`);
   }
 
   pause = () => {
-    //console.log('Pause')
     this.setState( prevState => ({paused: !this.state.paused}) )
   }
 
@@ -64,7 +65,6 @@ export default class Timer extends Component {
   render() {
     const {mins, secs} = this.zeroPadLeft(this.convertToMinutes(this.state.count))
 
-    //console.log(`Rendered ${this.state.count}`);
     return (
       <TouchableOpacity
         style={styles.container}
@@ -77,12 +77,12 @@ export default class Timer extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 2,
+    //flex: 1, //Don't use.
     justifyContent: 'center',
     alignItems: 'center',
-    //backgroundColor: 'orange',
+    backgroundColor: 'orange',
   },
   count: {
-    fontSize: 40,
+    fontSize: 60,
   }
 })
