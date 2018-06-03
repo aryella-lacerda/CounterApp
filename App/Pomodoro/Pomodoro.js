@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import {Icon} from 'react-native-elements'
 import Timer from './Timer'
 import InfoBar from './InfoBar'
@@ -17,11 +17,11 @@ export default class App extends Component {
     workingStretchesToLongBreak: 4,
 
     currentInterval: Interval.WORKING_STRECH,
+    currentBreakType: Interval.SHORT_BREAK,
+    currentTimer: 25,
     currentCycle: 1,
   }
 
-  //FIXME: setState for currentTimer in all possible scenarios?
-  //App -> InfoBar -> InfoSquare -> TimeIntervalButton
   updateInterval = (updatedIntervalType, updatedIntervalValue) => {
     updatedIntervalValue = Number(updatedIntervalValue)
 
@@ -41,7 +41,7 @@ export default class App extends Component {
         break
     }
 
-    //If current time interval is the one that was updated...
+    //If the time interval altered was the current interval, change timer.
     if (this.state.currentInterval == updatedIntervalType) {
       this.setState({currentTimer: updatedIntervalValue})
     }
@@ -58,23 +58,22 @@ export default class App extends Component {
     }
   }
 
-  currentTimer = () => {
-    switch (this.state.currentInterval) {
-      case Interval.WORKING_STRECH:
-        return this.state.workingStretch
-      case Interval.SHORT_BREAK:
-        return this.state.shortBreak
-      case Interval.LONG_BREAK:
-        return this.state.shortBreak
-    }
-  }
-
-  onPress = () => {
+  onPressSlider = () => {
     if (this.state.currentInterval === Interval.WORKING_STRECH) {
-      this.setState({
-        currentInterval: Interval.SHORT_BREAK,
-        currentTimer: this.state.shortBreak,
-      })
+
+      if (this.state.currentBreakType === Interval.SHORT_BREAK) {
+        this.setState({
+          currentInterval: Interval.SHORT_BREAK,
+          currentTimer: this.state.shortBreak,
+        })
+      }
+      else if (this.state.currentBreakType === Interval.LONG_BREAK) {
+        this.setState({
+          currentInterval: Interval.LONG_BREAK,
+          currentTimer: this.state.longBreak,
+        })
+      }
+
     }
 
     if (this.state.currentInterval === Interval.SHORT_BREAK ||
@@ -86,16 +85,45 @@ export default class App extends Component {
     }
   }
 
-  switchBreak = () => {
+  onPressSwitchBreak = () => {
     if (this.state.currentInterval === Interval.SHORT_BREAK) {
-      return <Text style={styles.intervalText}>switch to long break</Text>
+      this.setState({
+        currentInterval: Interval.LONG_BREAK,
+        currentBreakType: Interval.LONG_BREAK,
+        currentTimer: this.state.longBreak,
+      })
     }
 
     if (this.state.currentInterval === Interval.LONG_BREAK) {
-      return <Text style={styles.intervalText}>switch to short break</Text>
+      this.setState({
+        currentInterval: Interval.SHORT_BREAK,
+        currentBreakType: Interval.SHORT_BREAK,
+        currentTimer: this.state.shortBreak,
+      })
+    }
+  }
+
+  renderSwitchBreak = () => {
+    if (this.state.currentInterval === Interval.SHORT_BREAK) {
+      return (<TouchableOpacity onPress={this.onPressSwitchBreak}>
+        <Text style={[styles.intervalText, styles.switchBreakText]}>
+          switch to long break
+        </Text>
+      </TouchableOpacity>)
     }
 
-    return <Text style={styles.intervalText}>position holder</Text>
+    if (this.state.currentInterval === Interval.LONG_BREAK) {
+      return (<TouchableOpacity onPress={this.onPressSwitchBreak}>
+        <Text style={[styles.switchBreakText, styles.intervalText]}>
+          switch to short break
+        </Text>
+      </TouchableOpacity>)
+    }
+
+    return (<Text
+      style={[styles.switchBreakText, styles.intervalText, styles.placeholderText]}>
+      position holder
+    </Text>)
   }
 
   render() {
@@ -106,9 +134,10 @@ export default class App extends Component {
           <Icon
             iconStyle={styles.icon}
             size={40}
+            underlayColor='transparent'
             name='chevron-thin-left'
             type='entypo'
-            onPress={this.onPress}
+            onPress={this.onPressSlider}
           />
 
           <View style={styles.timerWrapper}>
@@ -116,18 +145,19 @@ export default class App extends Component {
             cycle one</Text>
             <Text style={styles.intervalText}>{this.intervalText()}</Text>
             <Timer
-              minCount={this.currentTimer()}
+              minCount={this.state.currentTimer}
               style={styles.timer}
             />
-            {this.switchBreak()}
+            {this.renderSwitchBreak()}
           </View>
 
           <Icon
             iconStyle={styles.icon}
             size={40}
+            underlayColor='transparent'
             name='chevron-thin-right'
             type='entypo'
-            onPress={this.onPress}
+            onPress={this.onPressSlider}
           />
         </View>
 
@@ -172,8 +202,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 12,
   },
+  switchBreakText: {
+    marginTop: 12,
+  },
+  placeholderText: {
+    backgroundColor: 'transparent',
+    color: 'transparent',
+  },
   icon: {
     padding: 10,
     backgroundColor: 'blue'
-  }
+  },
 })
