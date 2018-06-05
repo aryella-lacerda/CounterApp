@@ -5,7 +5,7 @@ import * as Interval from './intervals'
 import IntervalSlider from './IntervalSlider'
 import Header from './Header'
 
-//FIXME: Stop timer from automatically counting down when slider switches intervals
+//TODO: Rearrange files into folders.
 
 export default class App extends Component {
 
@@ -18,7 +18,7 @@ export default class App extends Component {
     currentInterval: Interval.WORKING_STRECH,
     currentBreakType: Interval.SHORT_BREAK,
     currentTimer: 25,
-    currentCycle: 1,
+    currentCycle: 3,
   }
 
   updateInterval = (updatedIntervalType, updatedIntervalValue) => {
@@ -105,7 +105,7 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container} >
-        
+
         <Header/>
 
         <IntervalSlider
@@ -114,6 +114,7 @@ export default class App extends Component {
           intervalText={this.intervalText()}
           currentTimer={this.state.currentTimer}
           currentInterval={this.state.currentInterval}
+          currentCycle={this.state.currentCycle}
         />
 
         <InfoBar

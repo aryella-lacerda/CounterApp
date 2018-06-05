@@ -3,6 +3,9 @@ import { View, FlatList, Text, StyleSheet, Modal } from 'react-native'
 import PropTypes from 'prop-types'
 import MinItem from './MinItem'
 
+//TODO: Limit range of picker
+//TODO: Make picker title 'minute/cycles' a prop
+
 export default class TimeIntervalPicker extends Component {
 
   static propTypes = {
