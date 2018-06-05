@@ -12,11 +12,13 @@ export default class Picker extends Component {
     dismissPicker: PropTypes.func.isRequired,
     pickerVisible: PropTypes.bool.isRequired,
     onValueChange: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    rangeLimit: PropTypes.number.isRequired,
   }
 
   constructor(props) {
     super(props)
-    this.mins = this.createObjArray(60)
+    this.mins = this.createObjArray(this.props.rangeLimit)
   }
 
   createObjArray = (n) => {
@@ -48,7 +50,7 @@ export default class Picker extends Component {
         onRequestClose={this.props.dismissPicker}
       >
         <View style={styles.container}>
-          <Text style={[styles.text, styles.minutes]}>minutes</Text>
+          <Text style={[styles.text, styles.minutes]}>{this.props.title}</Text>
           <FlatList
             style={styles.list}
             data={this.mins}

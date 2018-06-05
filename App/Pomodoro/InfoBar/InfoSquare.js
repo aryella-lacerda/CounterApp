@@ -8,6 +8,8 @@ export default class InfoSquare extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
+    pickerTitle: PropTypes.string.isRequired,
+    pickerRangeLimit: PropTypes.number.isRequired,
     intervalType: PropTypes.string.isRequired,
     onTimeIntervalChange: PropTypes.func.isRequired,
   }
@@ -25,6 +27,8 @@ export default class InfoSquare extends Component {
     return (
       <View style={styles.container}>
         <Button
+          pickerTitle={this.props.pickerTitle}
+          pickerRangeLimit={this.props.pickerRangeLimit}
           value={this.props.value}
           intervalType={this.props.intervalType}
           onTimeIntervalChange={this.props.onTimeIntervalChange}

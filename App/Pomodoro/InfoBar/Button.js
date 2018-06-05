@@ -8,6 +8,8 @@ export default class Button extends Component {
   static propTypes = {
     value: PropTypes.number.isRequired,
     intervalType: PropTypes.string.isRequired,
+    pickerTitle: PropTypes.string.isRequired,
+    pickerRangeLimit: PropTypes.number.isRequired,
     onTimeIntervalChange: PropTypes.func.isRequired,
   }
 
@@ -21,7 +23,6 @@ export default class Button extends Component {
   openPicker = () => { this.setState({ pickerOpen: true }) }
 
   onTimeIntervalChange = (value) => {
-    console.log('TIME_INTERVAL_BUTTON')
     this.setState({ value })
     this.props.onTimeIntervalChange(this.props.intervalType, value)
   }
@@ -35,6 +36,8 @@ export default class Button extends Component {
           <Text style={styles.text}>{this.state.value}</Text>
         </TouchableOpacity>
         <Picker
+          title={this.props.pickerTitle}
+          rangeLimit={this.props.pickerRangeLimit}
           onValueChange={this.onTimeIntervalChange}
           dismissPicker={this.closePicker}
           pickerVisible={this.state.pickerOpen}
