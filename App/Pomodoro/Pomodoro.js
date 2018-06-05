@@ -1,12 +1,11 @@
 import React, {Component} from 'react'
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-import {Icon} from 'react-native-elements'
-import Timer from './Timer'
+import {View, StyleSheet} from 'react-native'
 import InfoBar from './InfoBar'
 import * as Interval from './intervals'
+import IntervalSlider from './IntervalSlider'
+import Header from './Header'
 
-//FIXME: Move IntervalSlider into a seperate file
-//FIXME: Move SliderArrows into a seperate file
+//FIXME: Stop timer from automatically counting down when slider switches intervals
 
 export default class App extends Component {
 
@@ -103,63 +102,19 @@ export default class App extends Component {
     }
   }
 
-  renderSwitchBreak = () => {
-    if (this.state.currentInterval === Interval.SHORT_BREAK) {
-      return (<TouchableOpacity onPress={this.onPressSwitchBreak}>
-        <Text style={[styles.intervalText, styles.switchBreakText]}>
-          switch to long break
-        </Text>
-      </TouchableOpacity>)
-    }
-
-    if (this.state.currentInterval === Interval.LONG_BREAK) {
-      return (<TouchableOpacity onPress={this.onPressSwitchBreak}>
-        <Text style={[styles.switchBreakText, styles.intervalText]}>
-          switch to short break
-        </Text>
-      </TouchableOpacity>)
-    }
-
-    return (<Text
-      style={[styles.switchBreakText, styles.intervalText, styles.placeholderText]}>
-      position holder
-    </Text>)
-  }
-
   render() {
     return (
       <View style={styles.container} >
+        
+        <Header/>
 
-        <View style={styles.intervalWrapper}>
-          <Icon
-            iconStyle={styles.icon}
-            size={40}
-            underlayColor='transparent'
-            name='chevron-thin-left'
-            type='entypo'
-            onPress={this.onPressSlider}
-          />
-
-          <View style={styles.timerWrapper}>
-            <Text style={styles.intervalText}>
-            cycle one</Text>
-            <Text style={styles.intervalText}>{this.intervalText()}</Text>
-            <Timer
-              minCount={this.state.currentTimer}
-              style={styles.timer}
-            />
-            {this.renderSwitchBreak()}
-          </View>
-
-          <Icon
-            iconStyle={styles.icon}
-            size={40}
-            underlayColor='transparent'
-            name='chevron-thin-right'
-            type='entypo'
-            onPress={this.onPressSlider}
-          />
-        </View>
+        <IntervalSlider
+          onPressSliderArrows={this.onPressSlider}
+          onPressSwitchBreakButton={this.onPressSwitchBreak}
+          intervalText={this.intervalText()}
+          currentTimer={this.state.currentTimer}
+          currentInterval={this.state.currentInterval}
+        />
 
         <InfoBar
           onTimeIntervalChange={this.updateInterval}
@@ -168,6 +123,7 @@ export default class App extends Component {
           longBreakValue={this.state.longBreak}
           cyclesToLongBreakValue={this.state.workingStretchesToLongBreak}
         />
+
       </View>
     )
   }
@@ -176,41 +132,9 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'yellow',
+    //backgroundColor: 'yellow',
     //alignItems: 'stretch',
     justifyContent: 'center',
     //justifyContent: 'space-around',
-  },
-  intervalWrapper: {
-    backgroundColor: 'black',
-    flexDirection: 'row',
-    flex: 1,
-    justifyContent: 'space-between',
-  },
-  timerWrapper: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: 'purple',
-  },
-  intervalText: {
-    paddingVertical: 2,
-    width: 200,
-    fontSize: 15,
-    borderRadius: 10,
-    backgroundColor: 'white',
-    textAlign: 'center',
-    marginBottom: 12,
-  },
-  switchBreakText: {
-    marginTop: 12,
-  },
-  placeholderText: {
-    backgroundColor: 'transparent',
-    color: 'transparent',
-  },
-  icon: {
-    padding: 10,
-    backgroundColor: 'blue'
-  },
+  }
 })

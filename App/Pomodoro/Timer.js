@@ -21,6 +21,7 @@ export default class Timer extends Component {
     //In the case where the time interval was changed mid-countdown.
     if (this.props.minCount != nextProps.minCount) {
       this.state.count = this.convertToSeconds(nextProps.minCount)
+      this.setState({paused: true})
       return true
     }
 
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     //flex: 1, //Don't use.
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'orange',
+    //backgroundColor: 'orange',
   },
   count: {
     fontSize: 60,
