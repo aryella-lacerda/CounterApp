@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet} from 'react-native';
 import PropTypes from 'prop-types'
-import TimeIntervalButton from './TimeIntervalButton.js'
+import Button from './Button.js'
 
 export default class InfoSquare extends Component {
 
@@ -24,7 +24,7 @@ export default class InfoSquare extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TimeIntervalButton
+        <Button
           value={this.props.value}
           intervalType={this.props.intervalType}
           onTimeIntervalChange={this.props.onTimeIntervalChange}

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {View, StyleSheet} from 'react-native'
 import InfoBar from './InfoBar'
 import * as Interval from './intervals'
-import IntervalSlider from './IntervalSlider'
+import Slider from './Slider'
 import Header from './Header'
 
 //TODO: Rearrange files into folders.
@@ -108,8 +108,8 @@ export default class App extends Component {
 
         <Header/>
 
-        <IntervalSlider
-          onPressSliderArrows={this.onPressSlider}
+        <Slider
+          onPressArrows={this.onPressSlider}
           onPressSwitchBreakButton={this.onPressSwitchBreak}
           intervalText={this.intervalText()}
           currentTimer={this.state.currentTimer}

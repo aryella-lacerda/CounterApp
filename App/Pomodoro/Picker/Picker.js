@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { View, FlatList, Text, StyleSheet, Modal } from 'react-native'
 import PropTypes from 'prop-types'
-import MinItem from './MinItem'
+import Item from './Item'
 
 //TODO: Limit range of picker
 //TODO: Make picker title 'minute/cycles' a prop
 
-export default class TimeIntervalPicker extends Component {
+export default class Picker extends Component {
 
   static propTypes = {
     dismissPicker: PropTypes.func.isRequired,
@@ -34,7 +34,7 @@ export default class TimeIntervalPicker extends Component {
   }
 
   renderItem = ({item}) =>
-  <MinItem
+  <Item
     value={item.value}
     onPress={this.onPress}
   />

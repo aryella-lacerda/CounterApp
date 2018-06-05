@@ -1,10 +1,9 @@
-
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { Modal, View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-import TimeIntervalPicker from './TimeIntervalPicker.js'
+import Picker from '../Picker'
 
-export default class TimeIntervalButton extends Component {
+export default class Button extends Component {
 
   static propTypes = {
     value: PropTypes.number.isRequired,
@@ -35,7 +34,7 @@ export default class TimeIntervalButton extends Component {
           onPress={this.openPicker}>
           <Text style={styles.text}>{this.state.value}</Text>
         </TouchableOpacity>
-        <TimeIntervalPicker
+        <Picker
           onValueChange={this.onTimeIntervalChange}
           dismissPicker={this.closePicker}
           pickerVisible={this.state.pickerOpen}

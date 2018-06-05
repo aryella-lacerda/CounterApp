@@ -1,17 +1,15 @@
-
 import React from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements'
 import Timer from './Timer'
-import SliderArrow from './SliderArrow'
-import * as Interval from './intervals'
+import Arrow from './Arrow'
+import * as Interval from '../intervals'
 import PropTypes from 'prop-types'
 
-//FIXME: 'cycle one' is hardwired, replace with prop
 //TODO: Replace 'placeholder' with 'reset'
 
-const IntervalSlider = ({
-  onPressSliderArrows,
+const Slider = ({
+  onPressArrows,
   onPressSwitchBreakButton,
   intervalText,
   currentTimer,
@@ -57,9 +55,9 @@ const IntervalSlider = ({
 
   return (
     <View style={styles.container}>
-      <SliderArrow
+      <Arrow
         direction='left'
-        onPress={onPressSliderArrows}
+        onPress={onPressArrows}
       />
 
       <View style={styles.timerWrapper}>
@@ -69,16 +67,16 @@ const IntervalSlider = ({
         {switchBreakButton}
       </View>
 
-      <SliderArrow
+      <Arrow
         direction='right'
-        onPress={onPressSliderArrows}
+        onPress={onPressArrows}
       />
     </View>
   )
 }
 
-IntervalSlider.propTypes = {
-  onPressSliderArrows: PropTypes.func.isRequired,
+Slider.propTypes = {
+  onPressArrows: PropTypes.func.isRequired,
   onPressSwitchBreakButton: PropTypes.func.isRequired,
   intervalText: PropTypes.string.isRequired,
   currentTimer: PropTypes.number.isRequired,
@@ -86,7 +84,7 @@ IntervalSlider.propTypes = {
   currentCycle: PropTypes.number.isRequired,
 }
 
-export default IntervalSlider
+export default Slider
 
 const styles = StyleSheet.create({
   container: {

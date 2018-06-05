@@ -2,7 +2,7 @@ import React from 'react'
 import {Text, TouchableOpacity, StyleSheet} from 'react-native'
 import PropTypes from 'prop-types'
 
-const MinItem = ({value, onPress}) => (
+const Item = ({value, onPress}) => (
   <TouchableOpacity
     style={styles.container}
     onPress={() => onPress(value)}
@@ -11,12 +11,12 @@ const MinItem = ({value, onPress}) => (
   </TouchableOpacity>
 )
 
-MinItem.propTypes = {
+Item.propTypes = {
   value: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
 }
 
-export default MinItem
+export default Item
 
 const styles = StyleSheet.create({
   container: {

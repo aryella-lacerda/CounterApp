@@ -2,7 +2,7 @@ import React from 'react'
 import { View, StyleSheet} from 'react-native'
 import InfoSquare from './InfoSquare'
 import PropTypes from 'prop-types'
-import * as Interval from './intervals'
+import * as Interval from '../intervals'
 
 const InfoBar = ({
   onTimeIntervalChange,
