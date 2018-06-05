@@ -6,7 +6,11 @@ import PropTypes from 'prop-types'
 
 export default class Timer extends Component {
 
-  static propTypes = { minCount: PropTypes.number.isRequired }
+  static propTypes = {
+    minCount: PropTypes.number.isRequired,
+    reset: PropTypes.bool.isRequired,
+    onResetComplete: PropTypes.func.isRequired,
+  }
 
   constructor(props) {
     super(props)
@@ -17,23 +21,30 @@ export default class Timer extends Component {
   }
 
   shouldComponentUpdate = (nextProps, nextState) => {
+    //In case the reset button was pressed
+    if (nextProps.reset) {
+      console.log('SHOULD_COMP_UPDATE')
+      this.setState({paused: true})
+      this.state.count = this.convertToSeconds(nextProps.minCount)
+      this.props.onResetComplete()
+      return true
+    }
 
-    //In the case where the time interval was changed mid-countdown.
+    //In the case where the time interval was changed mid-countdown
     if (this.props.minCount != nextProps.minCount) {
       this.state.count = this.convertToSeconds(nextProps.minCount)
       this.setState({paused: true})
       return true
     }
 
-    //Unpausing
+    //Unpausing when clicked
     if (this.state.paused && !nextState.paused) {
       this.interval = setInterval(this.decrease, 1000)
     }
-    //Pausing
+    //Pausing when clicked
     if ((!this.state.paused && nextState.paused) || nextState.count < 0) {
       clearInterval(this.interval)
     }
-
     return nextState.count > -1
   }
 

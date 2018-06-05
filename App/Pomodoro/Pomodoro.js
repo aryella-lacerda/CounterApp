@@ -5,8 +5,6 @@ import * as Interval from './intervals'
 import Slider from './Slider'
 import Header from './Header'
 
-//TODO: Rearrange files into folders.
-
 export default class App extends Component {
 
   state = {
@@ -100,6 +98,10 @@ export default class App extends Component {
         currentTimer: this.state.shortBreak,
       })
     }
+  }
+
+  onResetCounter = () => {
+    
   }
 
   render() {

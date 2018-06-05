@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import { Icon } from 'react-native-elements'
 import Timer from './Timer'
@@ -6,43 +6,51 @@ import Arrow from './Arrow'
 import * as Interval from '../intervals'
 import PropTypes from 'prop-types'
 
-//TODO: Replace 'placeholder' with 'reset'
+export default class Slider extends Component {
 
-const Slider = ({
-  onPressArrows,
-  onPressSwitchBreakButton,
-  intervalText,
-  currentTimer,
-  currentInterval,
-  currentCycle,
-}) => {
+  state = { resetTimer: false }
 
-  let switchBreakButton = null
-  if (currentInterval === Interval.SHORT_BREAK) {
-    switchBreakButton = (
-      <TouchableOpacity onPress={onPressSwitchBreakButton}>
-        <Text style={[styles.intervalText, styles.switchBreakText]}>
-          switch to long break
-        </Text>
-      </TouchableOpacity>
-    )
+  onResetTimer = () => {
+    this.setState({ resetTimer: true })
+    console.log(`ON_RESET_TIMER: this.state.resetTimer === true`)
   }
-  else if (currentInterval === Interval.LONG_BREAK) {
-    switchBreakButton = (
-      <TouchableOpacity onPress={onPressSwitchBreakButton}>
-        <Text style={[styles.switchBreakText, styles.intervalText]}>
-          switch to short break
-        </Text>
-      </TouchableOpacity>
-    )
+
+  onResetComplete = () => {
+    this.setState({ resetTimer: false })
+    console.log(`ON_RESET_COMPLETE: this.state.resetTimer === false`)
   }
-  else {
-    switchBreakButton = (
-      <Text
-        style={[styles.switchBreakText, styles.intervalText, styles.placeholderText]}>
-        position holder
-      </Text>
-    )
+
+  switchBreakButton = () => {
+    let switchBreakButton = null
+    if (this.props.currentInterval === Interval.SHORT_BREAK) {
+      switchBreakButton = (
+        <TouchableOpacity onPress={this.props.onPressSwitchBreakButton}>
+          <Text style={[styles.intervalText, styles.switchBreakText]}>
+            switch to long break
+          </Text>
+        </TouchableOpacity>
+      )
+    }
+    else if (this.props.currentInterval === Interval.LONG_BREAK) {
+      switchBreakButton = (
+        <TouchableOpacity onPress={this.props.onPressSwitchBreakButton}>
+          <Text style={[styles.switchBreakText, styles.intervalText]}>
+            switch to short break
+          </Text>
+        </TouchableOpacity>
+      )
+    }
+    else {
+      switchBreakButton = (
+        <TouchableOpacity onPress={this.onResetTimer}>
+          <Text
+            style={[styles.switchBreakText, styles.intervalText]}>
+            reset counter
+          </Text>
+        </TouchableOpacity>
+      )
+    }
+    return switchBreakButton
   }
 
   digitToString = (d) => {
@@ -53,26 +61,38 @@ const Slider = ({
     return str[d]
   }
 
-  return (
-    <View style={styles.container}>
-      <Arrow
-        direction='left'
-        onPress={onPressArrows}
-      />
+  render() {
+    return (
+      <View style={styles.container}>
+        <Arrow
+          direction='left'
+          onPress={this.props.onPressArrows}
+        />
 
-      <View style={styles.timerWrapper}>
-        <Text style={styles.intervalText}> cycle {this.digitToString(currentCycle)}</Text>
-        <Text style={styles.intervalText}> {intervalText} </Text>
-        <Timer minCount={currentTimer} style={styles.timer} />
-        {switchBreakButton}
+        <View style={styles.timerWrapper}>
+          <Text style={styles.intervalText}>
+            cycle {this.digitToString(this.props.currentCycle)}
+          </Text>
+          <Text style={styles.intervalText}>
+            {this.props.intervalText}
+          </Text>
+          <Timer
+            minCount={this.props.currentTimer}
+            style={styles.timer}
+            reset={this.state.resetTimer}
+            onResetComplete={this.onResetComplete}
+          />
+          {(this.state.resetTimer) ? console.log('RENDER YES') : console.log('RENDER NO')}
+          {this.switchBreakButton()}
+        </View>
+
+        <Arrow
+          direction='right'
+          onPress={this.props.onPressArrows}
+        />
       </View>
-
-      <Arrow
-        direction='right'
-        onPress={onPressArrows}
-      />
-    </View>
-  )
+    )
+  }
 }
 
 Slider.propTypes = {
@@ -83,8 +103,6 @@ Slider.propTypes = {
   currentInterval: PropTypes.string.isRequired,
   currentCycle: PropTypes.number.isRequired,
 }
-
-export default Slider
 
 const styles = StyleSheet.create({
   container: {
